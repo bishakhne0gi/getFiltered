@@ -1,0 +1,52 @@
+{
+  "name": "reactnative",
+  "version": "1.0.0",
+  "main": "index.tsx",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "web": "expo start --web",
+    "tsc": "tsc --noEmit",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+  },
+  "dependencies": {
+    "@expo-google-fonts/overpass-mono": "^0.2.3",
+    "@expo/vector-icons": "^14.0.2",
+    "@react-navigation/bottom-tabs": "^7.2.1",
+    "@react-navigation/native": "^7.0.15",
+    "@react-navigation/native-stack": "^7.2.1",
+    "@react-navigation/stack": "^7.1.2",
+    "@tanstack/react-query": "^5.68.0",
+    "buffer": "^6.0.3",
+    "expo": "~52.0.38",
+    "expo-dev-client": "~5.0.14",
+    "expo-file-system": "^18.0.11",
+    "expo-font": "~13.0.4",
+    "expo-gl": "~15.0.4",
+    "expo-image-manipulator": "^13.0.6",
+    "expo-image-picker": "^16.0.6",
+    "expo-media-library": "^17.0.6",
+    "expo-splash-screen": "^0.29.22",
+    "expo-status-bar": "~2.0.1",
+    "gl-react": "^5.2.0",
+    "gl-react-expo": "^5.2.1",
+    "ky": "^1.7.5",
+    "react": "18.3.1",
+    "react-native": "0.76.7",
+    "react-native-color-matrix-image-filters": "^7.0.2",
+    "react-native-reanimated": "~3.8.0",
+    "react-native-safe-area-context": "^5.3.0",
+    "react-native-screens": "^4.9.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "@react-native-community/cli": "latest",
+    "@tsconfig/react-native": "^3.0.5",
+    "@types/jest": "^29.5.14",
+    "@types/react": "^18.3.18",
+    "@types/react-native": "^0.73.0",
+    "typescript": "^5.8.2"
+  },
+  "private": true
+}
