@@ -11,7 +11,7 @@ import Animated, {
   useSharedValue,
 } from "react-native-reanimated";
 import React, { useState, useEffect } from "react";
-import { View, Image, Dimensions, StyleSheet } from "react-native";
+import { View, Image, Dimensions, StyleSheet, Text } from "react-native";
 
 import { useRoute, RouteProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -161,8 +161,11 @@ function FilterScreen() {
   const { imageUri } = route.params;
 
   const scrollX = useSharedValue(0);
+  const activeIndexShared = useSharedValue(0);
+
   const [activeIndex, setActiveIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {}, [activeIndex]);
 
   const onScroll = useAnimatedScrollHandler((e) => {
     scrollX.value = clamp(
@@ -172,7 +175,8 @@ function FilterScreen() {
     );
     const newActiveIndex = Math.round(scrollX.value);
 
-    if (activeIndex !== newActiveIndex) {
+    if (activeIndexShared.value !== newActiveIndex) {
+      activeIndexShared.value = newActiveIndex;
       runOnJS(setActiveIndex)(newActiveIndex);
     }
   });
@@ -205,14 +209,13 @@ function FilterScreen() {
           style={{ flex: 1 }}
         />
         {/* Add a colored overlay to simulate filter effect */}
-        {activeFilter.id !== "original" && (
-          <View
-            style={[
-              StyleSheet.absoluteFillObject,
-              { backgroundColor: getFilterOverlayColor() },
-            ]}
-          />
-        )}
+
+        <View
+          style={[
+            StyleSheet.absoluteFillObject,
+            { backgroundColor: getFilterOverlayColor() },
+          ]}
+        />
       </View>
       <View
         style={{
@@ -223,9 +226,7 @@ function FilterScreen() {
           marginBottom: 20,
         }}
       >
-        <Animated.Text
-          entering={FadeIn.duration(500)}
-          exiting={FadeOut.duration(500)}
+        <Text
           style={{
             color: "black",
             fontSize: 14,
@@ -243,7 +244,7 @@ function FilterScreen() {
           }}
         >
           {allFilters[activeIndex].name}
-        </Animated.Text>
+        </Text>
       </View>
 
       <Animated.FlatList
