@@ -26,10 +26,6 @@ type RootStackParamList = {
 };
 
 type FilterScreenRouteProp = RouteProp<RootStackParamList, "FilterScreen">;
-type FilterScreenNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  "FilterScreen"
->;
 
 const { width } = Dimensions.get("screen");
 const _itemSize = width * 0.24;
@@ -62,15 +58,6 @@ function FilterItem({
   scrollX: SharedValue<number>;
   originalImageUri: string;
 }) {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    // Just to simulate loading for consistency
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 300);
-  }, [originalImageUri]);
-
   const styles = useAnimatedStyle(() => {
     const borderColor = interpolateColor(
       scrollX.value,
@@ -169,6 +156,9 @@ function FilterScreen() {
   const textOpacity = useSharedValue(1);
 
   const [activeIndex, setActiveIndex] = useState(0);
+  useEffect(() => {
+    textOpacity.value = withDelay(1000, withTiming(0, { duration: 500 }));
+  }, []);
 
   const onScroll = useAnimatedScrollHandler((e) => {
     scrollX.value = clamp(

@@ -71,7 +71,12 @@ const HomeScreen = () => {
 
         {/* Center image */}
         <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            paddingRight: 40,
+          }}
         >
           <Image
             source={require("../assets/Camera.png")}

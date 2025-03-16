@@ -190,6 +190,7 @@ const UploadScreen = () => {
             alignItems: "center",
             justifyContent: "center",
             gap: 10,
+            opacity: image ? 1 : 0.5,
           }}
           onPress={applyFilters}
           disabled={!image}
