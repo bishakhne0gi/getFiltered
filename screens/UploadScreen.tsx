@@ -6,7 +6,6 @@ import {
   Image,
   Platform,
   Alert,
-  Dimensions,
   SafeAreaView,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";

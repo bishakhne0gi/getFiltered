@@ -12,6 +12,7 @@ import {
 } from "@expo-google-fonts/overpass-mono";
 import * as SplashScreen from "expo-splash-screen";
 import { View } from "react-native";
+import HomeScreen from "./screens/HomeScreen";
 const Stack = createNativeStackNavigator();
 
 const queryClient = new QueryClient();
@@ -37,7 +38,14 @@ export default function App() {
       <NavigationContainer>
         <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
           <StatusBar style="light" />
-          <Stack.Navigator initialRouteName="Upload">
+          <Stack.Navigator initialRouteName="Home">
+            <Stack.Screen
+              name="Home"
+              component={HomeScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
             <Stack.Screen
               name="Upload"
               component={UploadScreen}
