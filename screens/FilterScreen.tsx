@@ -1,4 +1,5 @@
 import Animated, {
+  cancelAnimation,
   clamp,
   FadeIn,
   FadeOut,
@@ -9,6 +10,9 @@ import Animated, {
   useAnimatedScrollHandler,
   useAnimatedStyle,
   useSharedValue,
+  withDelay,
+  withSequence,
+  withTiming,
 } from "react-native-reanimated";
 import React, { useState, useEffect } from "react";
 import { View, Image, Dimensions, StyleSheet, Text } from "react-native";
@@ -162,10 +166,9 @@ function FilterScreen() {
 
   const scrollX = useSharedValue(0);
   const activeIndexShared = useSharedValue(0);
+  const textOpacity = useSharedValue(1);
 
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
-  useEffect(() => {}, [activeIndex]);
 
   const onScroll = useAnimatedScrollHandler((e) => {
     scrollX.value = clamp(
@@ -177,12 +180,27 @@ function FilterScreen() {
 
     if (activeIndexShared.value !== newActiveIndex) {
       activeIndexShared.value = newActiveIndex;
+      cancelAnimation(textOpacity);
+      textOpacity.value = withSequence(
+        withTiming(1, { duration: 500 }),
+        withDelay(1000, withTiming(0, { duration: 500 }))
+      );
       runOnJS(setActiveIndex)(newActiveIndex);
     }
   });
 
   const activeFilter = allFilters[activeIndex];
+  const fadeTextStyle = useAnimatedStyle(() => {
+    // Start fading out after 1 second
 
+    return {
+      opacity: textOpacity.value,
+      justifyContent: "center",
+      alignItems: "center",
+      width: "100%",
+      marginBottom: 20,
+    };
+  });
   const getFilterOverlayColor = () => {
     if (activeFilter.id === "original") return "transparent";
     if (activeFilter.id === "grayscale") return "rgba(0,0,0,0.5)";
@@ -198,7 +216,6 @@ function FilterScreen() {
     if (activeFilter.id === "gingham") return "rgba(230,230,250,0.4)";
     return "transparent";
   };
-
   return (
     <View style={{ flex: 1, justifyContent: "flex-end" }}>
       <View style={[StyleSheet.absoluteFillObject]}>
@@ -217,15 +234,7 @@ function FilterScreen() {
           ]}
         />
       </View>
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          width: "100%",
-
-          marginBottom: 20,
-        }}
-      >
+      <Animated.View style={[fadeTextStyle]}>
         <Text
           style={{
             color: "black",
@@ -245,7 +254,7 @@ function FilterScreen() {
         >
           {allFilters[activeIndex].name}
         </Text>
-      </View>
+      </Animated.View>
 
       <Animated.FlatList
         style={{ flexGrow: 0, height: _itemSize * 2 }}
